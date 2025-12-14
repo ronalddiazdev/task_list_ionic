@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">
+      Lista de Tareas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-item>
+    <ion-input type="text" placeholder="Ingrese la tarea" [(ngModel)]="task" name="task" />
+    <button (click)="addTask()" [disabled]="!task">
+      <ion-icon name="add-outline"></ion-icon>
+    </button>
+  </ion-item>
+
+  @if (tasks.length == 0) {
+  <ion-item class="ion-text-center">
+    <ion-label>
+      No hay tareas pendientes
+    </ion-label>
+  </ion-item>
+  }@else {
+  <ion-list>
+    <ion-reorder-group [disabled]="false" (ionItemReorder)="reorderTasks($event)">
+      @for (task of tasks; track task) {
+
+      <ion-item-sliding>
+        <ion-item>
+          <ion-label>
+            {{task}}
+          </ion-label>
+          <ion-reorder />
+        </ion-item>
+
+        <ion-item-options>
+          <ion-item-option color="danger" (click)="confirmDelete(task)">
+            <ion-icon class="icon-only" name="trash-outline"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+      }
+    </ion-reorder-group>
+  </ion-list>
+  }
+</ion-content>
